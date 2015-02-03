@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title> Titanic: Machine Learning from Disaster(form Kaggle)</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+
+</head>
+
+<body>
+<h1> Titanic: Machine Learning from Disaster(form Kaggle)</h1>
+
+<ul>
+<li>This is a knowledge project in <a href="https://www.kaggle.com">Kaggle</a> for machine learning beginners. </li>
+<li>Project: <a href="https://www.kaggle.com/c/titanic-gettingStarted">Titanic: Machine Learning from Disaster</a></li>
+<li>Practice <strong>data cleaning, feaure engineering, missing value inference, and model fitting using logistic regression</strong></li>
+</ul>
+
+<pre><code class="r">### load data###
+train &lt;- read.csv(&quot;/Users/yimizhao/Desktop/Study/Data_science/Projects/DataScienceProjects/titanic/data/train.csv&quot;)
+test &lt;- read.csv(&quot;/Users/yimizhao/Desktop/Study/Data_science/Projects/DataScienceProjects/titanic/data/test.csv&quot;)
+head(train)
+</code></pre>
+
+<pre><code>##   PassengerId Survived Pclass
+## 1           1        0      3
+## 2           2        1      1
+## 3           3        1      3
+## 4           4        1      1
+## 5           5        0      3
+## 6           6        0      3
+##                                                  Name    Sex Age SibSp
+## 1                             Braund, Mr. Owen Harris   male  22     1
+## 2 Cumings, Mrs. John Bradley (Florence Briggs Thayer) female  38     1
+## 3                              Heikkinen, Miss. Laina female  26     0
+## 4        Futrelle, Mrs. Jacques Heath (Lily May Peel) female  35     1
+## 5                            Allen, Mr. William Henry   male  35     0
+## 6                                    Moran, Mr. James   male  NA     0
+##   Parch           Ticket   Fare Cabin Embarked
+## 1     0        A/5 21171  7.250              S
+## 2     0         PC 17599 71.283   C85        C
+## 3     0 STON/O2. 3101282  7.925              S
+## 4     0           113803 53.100  C123        S
+## 5     0           373450  8.050              S
+## 6     0           330877  8.458              Q
+</code></pre>
+
+<pre><code class="r">head(test)
+</code></pre>
+
+<pre><code>##   PassengerId Pclass                                         Name    Sex
+## 1         892      3                             Kelly, Mr. James   male
+## 2         893      3             Wilkes, Mrs. James (Ellen Needs) female
+## 3         894      2                    Myles, Mr. Thomas Francis   male
+## 4         895      3                             Wirz, Mr. Albert   male
+## 5         896      3 Hirvonen, Mrs. Alexander (Helga E Lindqvist) female
+## 6         897      3                   Svensson, Mr. Johan Cervin   male
+##    Age SibSp Parch  Ticket   Fare Cabin Embarked
+## 1 34.5     0     0  330911  7.829              Q
+## 2 47.0     1     0  363272  7.000              S
+## 3 62.0     0     0  240276  9.688              Q
+## 4 27.0     0     0  315154  8.662              S
+## 5 22.0     1     1 3101298 12.287              S
+## 6 14.0     0     0    7538  9.225              S
+</code></pre>
+
+<h2>1. Data Cleaning</h2>
+
+<h3>(1)Train data cleaning</h3>
+
+<h3>1) Data preparing</h3>
+
+<pre><code class="r"># remove&#39;Passengerid&#39;,Ticket&#39;,&#39;Fare&#39;, &#39;Cabin&#39; and &#39;Embarked&#39;
+mydata &lt;- train[, -c(1, 9:12)]
+str(mydata)
+</code></pre>
+
+<pre><code>## &#39;data.frame&#39;:    891 obs. of  7 variables:
+##  $ Survived: int  0 1 1 1 0 0 0 0 1 1 ...
+##  $ Pclass  : int  3 1 3 1 3 3 1 3 3 2 ...
+##  $ Name    : Factor w/ 891 levels &quot;Abbing, Mr. Anthony&quot;,..: 109 191 358 277 16 559 520 629 417 581 ...
+##  $ Sex     : Factor w/ 2 levels &quot;female&quot;,&quot;male&quot;: 2 1 1 1 2 2 2 2 1 1 ...
+##  $ Age     : num  22 38 26 35 35 NA 54 2 27 14 ...
+##  $ SibSp   : int  1 1 0 1 0 0 0 3 0 1 ...
+##  $ Parch   : int  0 0 0 0 0 0 0 1 2 0 ...
+</code></pre>
+
+<pre><code class="r">mydata$Survived &lt;- factor(mydata$Survived)
+mydata$Pclass &lt;- factor(mydata$Pclass)
+mydata$Name &lt;- as.character(mydata$Name)
+str(mydata)
+</code></pre>
+
+<pre><code>## &#39;data.frame&#39;:    891 obs. of  7 variables:
+##  $ Survived: Factor w/ 2 levels &quot;0&quot;,&quot;1&quot;: 1 2 2 2 1 1 1 1 2 2 ...
+##  $ Pclass  : Factor w/ 3 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;: 3 1 3 1 3 3 1 3 3 2 ...
+##  $ Name    : chr  &quot;Braund, Mr. Owen Harris&quot; &quot;Cumings, Mrs. John Bradley (Florence Briggs Thayer)&quot; &quot;Heikkinen, Miss. Laina&quot; &quot;Futrelle, Mrs. Jacques Heath (Lily May Peel)&quot; ...
+##  $ Sex     : Factor w/ 2 levels &quot;female&quot;,&quot;male&quot;: 2 1 1 1 2 2 2 2 1 1 ...
+##  $ Age     : num  22 38 26 35 35 NA 54 2 27 14 ...
+##  $ SibSp   : int  1 1 0 1 0 0 0 3 0 1 ...
+##  $ Parch   : int  0 0 0 0 0 0 0 1 2 0 ...
+</code></pre>
+
+<pre><code class="r"># replacing &#39;Sex&#39; variable with a Dummy Variable (male=0,female=1)
+mydata$Sex = gsub(&quot;female&quot;, 1, mydata$Sex)
+mydata$Sex = gsub(&quot;male&quot;, 0, mydata$Sex)
+mydata$Sex &lt;- factor(mydata$Sex)
+head(mydata)
+</code></pre>
+
+<pre><code>##   Survived Pclass                                                Name Sex
+## 1        0      3                             Braund, Mr. Owen Harris   0
+## 2        1      1 Cumings, Mrs. John Bradley (Florence Briggs Thayer)   1
+## 3        1      3                              Heikkinen, Miss. Laina   1
+## 4        1      1        Futrelle, Mrs. Jacques Heath (Lily May Peel)   1
+## 5        0      3                            Allen, Mr. William Henry   0
+## 6        0      3                                    Moran, Mr. James   0
+##   Age SibSp Parch
+## 1  22     1     0
+## 2  38     1     0
+## 3  26     0     0
+## 4  35     1     0
+## 5  35     0     0
+## 6  NA     0     0
+</code></pre>
+
+<h3>2) Dealing with missing &ldquo;Age&rdquo; values</h3>
+
+<pre><code class="r">master_vector &lt;- grep(&quot;Master.&quot;, mydata$Name, fixed = T)
+miss_vector &lt;- grep(&quot;Miss.&quot;, mydata$Name, fixed = T)
+mrs_vector &lt;- grep(&quot;Mrs.&quot;, mydata$Name, fixed = T)
+mr_vector &lt;- grep(&quot;Mr.&quot;, mydata$Name, fixed = T)
+dr_vector &lt;- grep(&quot;Dr.&quot;, mydata$Name, fixed = T)
+</code></pre>
+
+<pre><code class="r"># simplify &#39;Name&#39; variable
+for (i in master_vector) {
+    mydata$Name[i] = &quot;Master&quot;
+}
+for (i in miss_vector) {
+    mydata$Name[i] = &quot;Miss&quot;
+}
+for (i in mrs_vector) {
+    mydata$Name[i] = &quot;Mrs&quot;
+}
+for (i in mr_vector) {
+    mydata$Name[i] = &quot;Mr&quot;
+}
+for (i in dr_vector) {
+    mydata$Name[i] = &quot;Dr&quot;
+}
+head(mydata)
+</code></pre>
+
+<pre><code>##   Survived Pclass Name Sex Age SibSp Parch
+## 1        0      3   Mr   0  22     1     0
+## 2        1      1  Mrs   1  38     1     0
+## 3        1      3 Miss   1  26     0     0
+## 4        1      1  Mrs   1  35     1     0
+## 5        0      3   Mr   0  35     0     0
+## 6        0      3   Mr   0  NA     0     0
+</code></pre>
+
+<pre><code class="r"># making inference on missing age values: inputting title-group averages
+# fisrt, calculate average age for each group
+master_age = round(mean(mydata$Age[mydata$Name == &quot;Master&quot;], na.rm = T), digits = 2)
+miss_age = round(mean(mydata$Age[mydata$Name == &quot;Miss&quot;], na.rm = T), digits = 2)
+mrs_age = round(mean(mydata$Age[mydata$Name == &quot;Mrs&quot;], na.rm = T), digits = 2)
+mr_age = round(mean(mydata$Age[mydata$Name == &quot;Mr&quot;], na.rm = T), digits = 2)
+dr_age = round(mean(mydata$Age[mydata$Name == &quot;Dr&quot;], na.rm = T), digits = 2)
+</code></pre>
+
+<pre><code class="r"># second, make inference on missing age values
+for (i in 1:nrow(mydata)) {
+    if (is.na(mydata[i, 5])) {
+        if (mydata$Name[i] == &quot;Master&quot;) {
+            mydata$Age[i] = master_age
+        } else if (mydata$Name[i] == &quot;Miss&quot;) {
+            mydata$Age[i] = miss_age
+        } else if (mydata$Name[i] == &quot;Mrs&quot;) {
+            mydata$Age[i] = mrs_age
+        } else if (mydata$Name[i] == &quot;Mr&quot;) {
+            mydata$Age[i] = mr_age
+        } else if (mydata$Name[i] == &quot;Dr&quot;) {
+            mydata$Age[i] = dr_age
+        } else {
+            print(&quot;Uncaught Title&quot;)
+        }
+    }
+}
+# check data
+summary(mydata$Age)
+</code></pre>
+
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    0.42   21.80   30.00   29.80   35.90   80.00
+</code></pre>
+
+<h3>3)Feature engineering: creating new variables to strengthen our model</h3>
+
+<pre><code class="r"># define &#39;Child&#39; variable where age&lt;12
+mydata[&quot;Child&quot;] = NA
+for (i in 1:nrow(mydata)) {
+    if (mydata$Age[i] &lt;= 12) {
+        mydata$Child[i] = 1
+    } else {
+        mydata$Child[i] = 0
+    }
+}
+head(mydata)
+</code></pre>
+
+<pre><code>##   Survived Pclass Name Sex   Age SibSp Parch Child
+## 1        0      3   Mr   0 22.00     1     0     0
+## 2        1      1  Mrs   1 38.00     1     0     0
+## 3        1      3 Miss   1 26.00     0     0     0
+## 4        1      1  Mrs   1 35.00     1     0     0
+## 5        0      3   Mr   0 35.00     0     0     0
+## 6        0      3   Mr   0 32.37     0     0     0
+</code></pre>
+
+<pre><code class="r"># define &#39;Family&#39; variable where family size=# of Siblings/Spouses + # of
+# Parents/Children add 1 so minimum family size becomes 1
+mydata[&quot;Family&quot;] = NA
+for (i in 1:nrow(mydata)) {
+    x = mydata$SibSp[i]
+    y = mydata$Parch[i]
+    mydata$Family[i] = x + y + 1
+}
+head(mydata)
+</code></pre>
+
+<pre><code>##   Survived Pclass Name Sex   Age SibSp Parch Child Family
+## 1        0      3   Mr   0 22.00     1     0     0      2
+## 2        1      1  Mrs   1 38.00     1     0     0      2
+## 3        1      3 Miss   1 26.00     0     0     0      1
+## 4        1      1  Mrs   1 35.00     1     0     0      2
+## 5        0      3   Mr   0 35.00     0     0     0      1
+## 6        0      3   Mr   0 32.37     0     0     0      1
+</code></pre>
+
+<pre><code class="r"># define variable &#39;Mother&#39; with title &#39;Mrs&#39; and value of Parch greater than
+# 0
+mydata[&quot;Mother&quot;] = NA
+for (i in 1:nrow(mydata)) {
+    if (mydata$Name[i] == &quot;Mrs&quot; &amp; mydata$Parch[i] &gt; 0) {
+        mydata$Mother[i] = 1
+    } else {
+        mydata$Mother[i] = 0
+    }
+}
+head(mydata)
+</code></pre>
+
+<pre><code>##   Survived Pclass Name Sex   Age SibSp Parch Child Family Mother
+## 1        0      3   Mr   0 22.00     1     0     0      2      0
+## 2        1      1  Mrs   1 38.00     1     0     0      2      0
+## 3        1      3 Miss   1 26.00     0     0     0      1      0
+## 4        1      1  Mrs   1 35.00     1     0     0      2      0
+## 5        0      3   Mr   0 35.00     0     0     0      1      0
+## 6        0      3   Mr   0 32.37     0     0     0      1      0
+</code></pre>
+
+<h3>(2) Test data cleaning</h3>
+
+<pre><code class="r"># similar process as train data
+PassengerId = test[1]
+testData = test[-c(1, 8:11)]
+testData$Pclass &lt;- factor(testData$Pclass)
+
+testData$Sex = gsub(&quot;female&quot;, 1, testData$Sex)
+testData$Sex = gsub(&quot;male&quot;, 0, testData$Sex)
+testData$Name = as.character(testData$Name)
+
+test_master_vector = grep(&quot;Master.&quot;, testData$Name)
+test_miss_vector = grep(&quot;Miss.&quot;, testData$Name)
+test_mrs_vector = grep(&quot;Mrs.&quot;, testData$Name)
+test_mr_vector = grep(&quot;Mr.&quot;, testData$Name)
+test_dr_vector = grep(&quot;Dr.&quot;, testData$Name)
+
+for (i in test_master_vector) {
+    testData$Name[i] = &quot;Master&quot;
+}
+for (i in test_miss_vector) {
+    testData$Name[i] = &quot;Miss&quot;
+}
+for (i in test_mrs_vector) {
+    testData$Name[i] = &quot;Mrs&quot;
+}
+for (i in test_mr_vector) {
+    testData$Name[i] = &quot;Mr&quot;
+}
+for (i in test_dr_vector) {
+    testData$Name[i] = &quot;Dr&quot;
+}
+
+test_master_age = round(mean(testData$Age[testData$Name == &quot;Master&quot;], na.rm = TRUE), 
+    digits = 2)
+test_miss_age = round(mean(testData$Age[testData$Name == &quot;Miss&quot;], na.rm = TRUE), 
+    digits = 2)
+test_mrs_age = round(mean(testData$Age[testData$Name == &quot;Mrs&quot;], na.rm = TRUE), 
+    digits = 2)
+test_mr_age = round(mean(testData$Age[testData$Name == &quot;Mr&quot;], na.rm = TRUE), 
+    digits = 2)
+test_dr_age = round(mean(testData$Age[testData$Name == &quot;Dr&quot;], na.rm = TRUE), 
+    digits = 2)
+
+for (i in 1:nrow(testData)) {
+    if (is.na(testData[i, 4])) {
+        if (testData$Name[i] == &quot;Master&quot;) {
+            testData$Age[i] &lt;- test_master_age
+        } else if (testData$Name[i] == &quot;Miss&quot;) {
+            testData$Age[i] &lt;- test_miss_age
+        } else if (testData$Name[i] == &quot;Mrs&quot;) {
+            testData$Age[i] &lt;- test_mrs_age
+        } else if (testData$Name[i] == &quot;Mr&quot;) {
+            testData$Age[i] &lt;- test_mr_age
+        } else if (testData$Name[i] == &quot;Dr&quot;) {
+            testData$Age[i] &lt;- test_dr_age
+        } else {
+            print(paste(&quot;Uncaught Title at: &quot;, i, sep = &quot;&quot;))
+            print(paste(&quot;The Title unrecognized was: &quot;, testData[i, 2], sep = &quot;&quot;))
+        }
+    }
+}
+</code></pre>
+
+<pre><code>## [1] &quot;Uncaught Title at: 89&quot;
+## [1] &quot;The Title unrecognized was: O&#39;Donoghue, Ms. Bridget&quot;
+</code></pre>
+
+<pre><code class="r">
+# We do a manual replacement here, because we weren&#39;t able to
+# programmatically figure out the title. We figured out it was 89 because
+# the above print statement should have warned us.
+testData[89, 4] = test_miss_age
+
+testData[&quot;Child&quot;] = NA
+
+for (i in 1:nrow(testData)) {
+    if (testData$Age[i] &lt;= 12) {
+        testData$Child[i] = 1
+    } else {
+        testData$Child[i] = 0
+    }
+}
+
+testData[&quot;Family&quot;] = NA
+
+for (i in 1:nrow(testData)) {
+    testData$Family[i] = testData$SibSp[i] + testData$Parch[i] + 1
+}
+
+testData[&quot;Mother&quot;] = NA
+
+for (i in 1:nrow(testData)) {
+    if (testData$Name[i] == &quot;Mrs&quot; &amp; testData$Parch[i] &gt; 0) {
+        testData$Mother[i] = 1
+    } else {
+        testData$Mother[i] = 0
+    }
+}
+</code></pre>
+
+<h2>2. Model Fitting(Logistic Regression)</h2>
+
+<h3>(1)Model 1</h3>
+
+<pre><code class="r">md_logit1 &lt;- glm(Survived ~ Pclass + Sex + Age + Child + Family + Mother, data = mydata, 
+    family = &quot;binomial&quot;)
+summary(md_logit1)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## glm(formula = Survived ~ Pclass + Sex + Age + Child + Family + 
+##     Mother, family = &quot;binomial&quot;, data = mydata)
+## 
+## Deviance Residuals: 
+##    Min      1Q  Median      3Q     Max  
+## -2.928  -0.557  -0.414   0.594   2.566  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  1.39493    0.42693    3.27   0.0011 ** 
+## Pclass2     -1.28199    0.26846   -4.78  1.8e-06 ***
+## Pclass3     -2.40392    0.24937   -9.64  &lt; 2e-16 ***
+## Sex1         2.76818    0.21111   13.11  &lt; 2e-16 ***
+## Age         -0.02831    0.00919   -3.08   0.0021 ** 
+## Child        1.93534    0.46401    4.17  3.0e-05 ***
+## Family      -0.44261    0.08940   -4.95  7.4e-07 ***
+## Mother       1.01271    0.42141    2.40   0.0163 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 1186.66  on 890  degrees of freedom
+## Residual deviance:  765.66  on 883  degrees of freedom
+## AIC: 781.7
+## 
+## Number of Fisher Scoring iterations: 5
+</code></pre>
+
+<pre><code class="r"># prediction
+p.hats1 &lt;- predict.glm(md_logit1, testData, type = &quot;response&quot;)
+survival &lt;- vector()
+for (i in 1:length(p.hats1)) {
+    if (p.hats1[i] &gt; 0.5) {
+        survival[i] = 1
+    } else {
+        survival[i] = 0
+    }
+}
+</code></pre>
+
+<pre><code class="r"># CSV for kaggle submission
+kaggle.sub1 &lt;- cbind(PassengerId, survival)
+colnames(kaggle.sub1) &lt;- c(&quot;PassengerId&quot;, &quot;Survived&quot;)
+head(kaggle.sub1)
+</code></pre>
+
+<pre><code>##   PassengerId Survived
+## 1         892        0
+## 2         893        0
+## 3         894        0
+## 4         895        0
+## 5         896        0
+## 6         897        0
+</code></pre>
+
+<pre><code class="r"># write.csv(kaggle.sub1,file=&#39;kaggle01.csv&#39;, row.names=F)
+</code></pre>
+
+<h3>(2)Model 2</h3>
+
+<pre><code class="r"># model 2(add interaction Sex*Pclass )
+md_logit2 &lt;- glm(Survived ~ Pclass + Sex + Age + Child + Family + Mother + Sex * 
+    Pclass, data = mydata, family = &quot;binomial&quot;)
+summary(md_logit2)
+</code></pre>
+
+<pre><code>## 
+## Call:
+## glm(formula = Survived ~ Pclass + Sex + Age + Child + Family + 
+##     Mother + Sex * Pclass, family = &quot;binomial&quot;, data = mydata)
+## 
+## Deviance Residuals: 
+##    Min      1Q  Median      3Q     Max  
+## -3.313  -0.600  -0.440   0.379   2.424  
+## 
+## Coefficients:
+##              Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)    1.3352     0.4592    2.91   0.0036 ** 
+## Pclass2       -1.6856     0.3587   -4.70  2.6e-06 ***
+## Pclass3       -1.8477     0.2778   -6.65  2.9e-11 ***
+## Sex1           4.0597     0.6292    6.45  1.1e-10 ***
+## Age           -0.0315     0.0100   -3.14   0.0017 ** 
+## Child          1.9574     0.4808    4.07  4.7e-05 ***
+## Family        -0.4510     0.0961   -4.70  2.7e-06 ***
+## Mother         0.9972     0.4724    2.11   0.0348 *  
+## Pclass2:Sex1   0.3353     0.8121    0.41   0.6797    
+## Pclass3:Sex1  -2.1422     0.6691   -3.20   0.0014 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 1186.66  on 890  degrees of freedom
+## Residual deviance:  735.65  on 881  degrees of freedom
+## AIC: 755.6
+## 
+## Number of Fisher Scoring iterations: 6
+</code></pre>
+
+<pre><code class="r"># prediction
+p.hats2 &lt;- predict.glm(md_logit2, testData, type = &quot;response&quot;)
+survival &lt;- vector()
+for (i in 1:length(p.hats2)) {
+    if (p.hats1[i] &gt; 0.5) {
+        survival[i] = 1
+    } else {
+        survival[i] = 0
+    }
+}
+</code></pre>
+
+<pre><code class="r"># CSV for kaggle submission
+kaggle.sub2 &lt;- cbind(PassengerId, survival)
+colnames(kaggle.sub2) &lt;- c(&quot;PassengerId&quot;, &quot;Survived&quot;)
+head(kaggle.sub2)
+</code></pre>
+
+<pre><code>##   PassengerId Survived
+## 1         892        0
+## 2         893        0
+## 3         894        0
+## 4         895        0
+## 5         896        0
+## 6         897        0
+</code></pre>
+
+<pre><code class="r"># write.csv(kaggle.sub2,file=&#39;kaggle02.csv&#39;, row.names=F)
+</code></pre>
+
+</body>
+
+</html>
+
